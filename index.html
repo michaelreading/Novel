@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovelWorld - Read Your Favourite Novels</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f3f9;
+  color: #252033;
+}
+
+header {
+  background: #24113f;
+  color: white;
+  padding: 22px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #e5adff;
+}
+
+.hero {
+  background: linear-gradient(120deg,#301451,#7044a1);
+  color: white;
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.hero h1 {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.search {
+  width: 90%;
+  max-width: 450px;
+  padding: 14px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+}
+
+.container {
+  padding: 35px 6%;
+}
+
+.section-title {
+  font-size: 25px;
+  margin-bottom: 25px;
+}
+
+.novels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+  gap: 22px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px #00000012;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 245px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card h3 {
+  margin-bottom: 9px;
+}
+
+.category {
+  color: #8651b2;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: 7px;
+  background: #65349a;
+  color: white;
+  font-size: 14px;
+  margin-top: 13px;
+}
+
+button:hover {
+  background: #421e70;
+}
+
+.reader {
+  display: none;
+  background: white;
+  margin: 30px auto;
+  padding: 25px;
+  max-width: 800px;
+  border-radius: 12px;
+  line-height: 1.9;
+}
+
+.reader h2 {
+  color: #65349a;
+  margin-bottom: 10px;
+}
+
+.reader h3 {
+  margin: 20px 0;
+}
+
+.reader p {
+  margin-bottom: 17px;
+  white-space: pre-line;
+}
+
+.chapter-list button {
+  margin: 5px;
+}
+
+.reader-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+footer {
+  background: #24113f;
+  color: white;
+  text-align: center;
+  padding: 25px;
+  margin-top: 40px;
+}
+
+@media(max-width:500px) {
+  .hero h1 {font-size:27px;}
+  .card img {height:210px;}
+  .container {padding:25px 4%;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Novel<span>World</span></div>
+  <div>📚 Read • Explore • Enjoy</div>
+</header>
+
+<section class="hero">
+  <h1>Welcome to NovelWorld</h1>
+  <p>Discover amazing stories and enjoy reading your favourite novels.</p>
+  <input class="search" id="search"
+  placeholder="Search for a novel..."
+  oninput="searchNovels()">
+</section>
+
+<main class="container">
+  <h2 class="section-title">📖 Popular Novels</h2>
+  <div class="novels" id="novelList"></div>
+</main>
+
+<section class="reader" id="reader">
+  <button onclick="closeReader()">← Back to Novels</button>
+  <h2 id="novelTitle"></h2>
+  <div class="chapter-list" id="chapterList"></div>
+  <hr style="margin:20px 0">
+  <h3 id="chapterTitle"></h3>
+  <div id="chapterContent"></div>
+  <div class="reader-controls">
+    <button onclick="changeChapter(-1)">← Previous</button>
+    <button onclick="changeChapter(1)">Next Chapter →</button>
+  </div>
+</section>
+
+<footer>
+  <h3>NovelWorld 📚</h3>
+  <p>Every story has a beginning. Start reading yours today!</p>
+  <p style="margin-top:12px">© 2026 NovelWorld. All rights reserved.</p>
+</footer>
+
+<script>
+
+const novels = [
+
+{
+title:"The Billionaire's Secret Love",
+category:"Romance",
+image:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600",
+description:"A young woman discovers the secret behind the man she loves.",
+chapters:[
+["Chapter 1: A Strange Meeting",
+"Amara never believed that one meeting could change her entire life. She was walking home after a long day when a black luxury car stopped beside her. A handsome young man stepped out and asked if she needed help. His name was Daniel. He looked wealthy, confident and mysterious. She thanked him politely and continued walking, not knowing that their paths would cross again."],
+["Chapter 2: The Unexpected Invitation",
+"Three days later, Amara received an invitation to an exclusive dinner. She almost ignored it until she noticed Daniel's name. At the restaurant, he welcomed her with a warm smile. They talked for hours about their dreams and childhood. Amara began to feel comfortable around him, but something about his phone calls made her curious."],
+["Chapter 3: The Hidden Truth",
+"One evening, Amara discovered a photograph in Daniel's office. It showed him standing beside a woman wearing a wedding dress. Her heart dropped. Daniel returned and found her holding the picture. He explained that the woman was his late sister, whose story he had never been ready to share. Amara listened as he finally opened his heart."],
+["Chapter 4: A Love Worth Fighting For",
+"Daniel decided that there would be no more secrets between them. He told Amara about his fears, his family and the responsibilities that came with his wealth. She held his hand and smiled. Their relationship was not perfect, but they chose honesty. And for the first time, Daniel understood that real love could not be bought."]
+]
+},
+
+{
+title:"The Mystery of the Dark Castle",
+category:"Mystery",
+image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600",
+description:"An abandoned castle hides a secret that could change everything.",
+chapters:[
+["Chapter 1: The Forbidden Castle",
+"Nobody in the village went near the old castle after sunset. Stories said that strange lights appeared in its windows every night. But when David discovered a letter from his grandfather, he decided to investigate. The letter contained only one sentence: Find the room behind the old clock."],
+["Chapter 2: Footsteps in the Hall",
+"David entered the castle carrying a small flashlight. Dust covered the furniture, and the walls were filled with old paintings. Suddenly, he heard footsteps above him. He called out, but nobody answered. A door slowly opened at the end of the hallway."],
+["Chapter 3: The Secret Room",
+"Behind the giant clock, David discovered a hidden staircase. At the bottom was a room filled with letters, photographs and a strange golden key. He recognized his grandfather in one of the photographs. Then he found a message explaining that the castle belonged to his family."],
+["Chapter 4: The Final Discovery",
+"The golden key opened a wooden box containing the original documents of the castle. David discovered the truth about the village's forgotten history. The mysterious lights had been caused by an old machine hidden in the tower. He smiled as the mystery finally came to an end."]
+]
+},
+
+{
+title:"The Lost Princess",
+category:"Fantasy",
+image:"https://images.unsplash.com/photo-1511497584788-876760111969?w=600",
+description:"A young girl discovers that she belongs to a forgotten kingdom.",
+chapters:[
+["Chapter 1: The Girl in the Forest",
+"Princess Elara grew up believing she was an ordinary girl. She lived with a kind family near a beautiful forest. On her eighteenth birthday, a stranger arrived carrying a silver necklace. He told her that her real parents had ruled a kingdom far beyond the mountains."],
+["Chapter 2: The Journey Begins",
+"Elara decided to follow the stranger. They travelled through dangerous forests and crossed rivers under the moonlight. Along the way, she discovered that the necklace glowed whenever danger was near. She began to wonder what other powers she might possess."],
+["Chapter 3: The Enemy's Secret",
+"When they finally reached the kingdom, Elara learned that an evil ruler had taken the throne years earlier. The stranger revealed that he had once served her father. Elara knew that returning home would not be easy, but she refused to turn back."],
+["Chapter 4: The Return of the Princess",
+"Elara stood before the people and showed them the royal necklace. The kingdom's ancient guards recognized its symbol. With courage and the support of the people, she reclaimed her family's place. The lost princess had finally returned."]
+]
+},
+
+{
+title:"Broken Promises",
+category:"Drama",
+image:"https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600",
+description:"A story of betrayal, courage and finding happiness again.",
+chapters:[
+["Chapter 1: The Promise",
+"Grace believed that love meant trust. She had been with Michael for three years, and they had promised to build a future together. But lately, Michael had become distant. His late-night calls and unexplained journeys made her wonder whether the man she loved was changing."],
+["Chapter 2: The Betrayal",
+"One afternoon, Grace discovered messages that broke her heart. Michael had been seeing someone else. She confronted him, hoping there was an explanation. Instead, he remained silent. Grace walked away, carrying a pain she had never experienced before."],
+["Chapter 3: Starting Again",
+"Months passed, and Grace slowly rebuilt her confidence. She returned to school, focused on her dreams and started a small business. She learned that losing someone did not mean losing herself. Her friends supported her every step of the way."],
+["Chapter 4: A New Beginning",
+"At a community event, Grace met someone who respected her ambitions. She was no longer the frightened woman who feared being alone. She smiled at the future, knowing that happiness began with loving herself. Her story was not ending; it was beginning again."]
+]
+},
+
+{
+title:"The Stranger at Midnight",
+category:"Thriller",
+image:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=600",
+description:"A mysterious visitor arrives at midnight with a dangerous secret.",
+chapters:[
+["Chapter 1: The Midnight Knock",
+"It was exactly midnight when someone knocked three times on the door. Peter looked at the clock and wondered who could be visiting at such an hour. When he opened the door, a stranger stood outside holding a brown envelope. The stranger whispered, 'You are in danger.'"],
+["Chapter 2: The Envelope",
+"Peter opened the envelope and discovered several photographs of his house. One picture showed someone standing outside his bedroom window. The stranger explained that somebody had been watching the family for weeks. Peter immediately locked every door."],
+["Chapter 3: The Hidden Visitor",
+"A strange noise came from upstairs. Peter rushed toward the staircase, but the stranger stopped him. They discovered a hidden camera behind a family photograph. Someone had been monitoring the house from inside. Peter realized that the danger was much closer than he imagined."],
+["Chapter 4: The Truth at Dawn",
+"When the police arrived, the truth finally came out. The stranger was a private investigator hired by Peter's missing brother. The photographs were evidence of a criminal operation connected to their family. As morning arrived, Peter finally understood why his brother had disappeared."]
+]
+}
+
+];
+
+let currentNovel = 0;
+let currentChapter = 0;
+
+function displayNovels(list = novels) {
+ const container = document.getElementById("novelList");
+ container.innerHTML = "";
+
+ list.forEach(novel => {
+  const index = novels.indexOf(novel);
+  container.innerHTML += `
+   <div class="card">
+    <img src="${novel.image}" alt="${novel.title}"
+     onerror="this.src='https://placehold.co/400x550?text=Novel'">
+    <div class="card-content">
+     <h3>${novel.title}</h3>
+     <div class="category">${novel.category} • 4 Chapters</div>
+     <p>${novel.description}</p>
+     <button onclick="openNovel(${index})">Read Now</button>
+    </div>
+   </div>`;
+ });
+}
+
+function searchNovels() {
+ const value = document.getElementById("search").value.toLowerCase();
+ const results = novels.filter(n =>
+  n.title.toLowerCase().includes(value) ||
+  n.category.toLowerCase().includes(value)
+ );
+ displayNovels(results);
+}
+
+function openNovel(index) {
+ currentNovel = index;
+ currentChapter = 0;
+
+ document.getElementById("reader").style.display = "block";
+ document.getElementById("novelTitle").textContent =
+ novels[index].title;
+
+ document.getElementById("reader").scrollIntoView({
+  behavior:"smooth"
+ });
+
+ showChapter();
+}
+
+function showChapter() {
+ const novel = novels[currentNovel];
+
+ document.getElementById("chapterList").innerHTML =
+ novel.chapters.map((chapter,index) =>
+ `<button onclick="selectChapter(${index})">
+ Chapter ${index+1}</button>`
+ ).join("");
+
+ document.getElementById("chapterTitle").textContent =
+ novel.chapters[currentChapter][0];
+
+ document.getElementById("chapterContent").innerHTML =
+ "<p>" + novel.chapters[currentChapter][1] + "</p>";
+}
+
+function selectChapter(index) {
+ currentChapter = index;
+ showChapter();
+}
+
+function changeChapter(direction) {
+ const next = currentChapter + direction;
+
+ if(next >= 0 && next < novels[currentNovel].chapters.length) {
+  currentChapter = next;
+  showChapter();
+ } else if(next >= novels[currentNovel].chapters.length) {
+  alert("Congratulations! You have finished this novel.");
+ } else {
+  alert("You are already at the first chapter.");
+ }
+}
+
+function closeReader() {
+ document.getElementById("reader").style.display = "none";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+displayNovels();
+
+</script>
+
+</body>
+</html>
